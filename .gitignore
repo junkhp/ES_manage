@@ -3,3 +3,4 @@ db.sqlite3
 myvenv
 __pycache__
 *.DS_Store
+config/local_settings.py

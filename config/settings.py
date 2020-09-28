@@ -21,7 +21,11 @@ PROJECT_NAME = os.path.basename(BASE_DIR)
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_ljyz%wb2t_ofijc&kb-z@anh!k)^$i$&m0_owi)u3z6t52n5*'
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
