@@ -1,0 +1,78 @@
+[
+    {
+        "model": "history.customusermodel",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$c7sBTbazUBDJ$QyQQwlYzPHm2GKWHVBSRe68YLmPUuT6IZxjWy9EhpFM=",
+            "last_login": "2020-09-23T16:12:00.289Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2020-09-23T08:57:08.182Z",
+            "university": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "history.customusermodel",
+        "pk": 2,
+        "fields": {
+            "password": "pass",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "test",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-09-23T08:57:27Z",
+            "university": "\u5927\u962a\u5e9c\u7acb\u5927\u5b66",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "history.customusermodel",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$AJzBeAmrjzut$2/bfDmf4UVTCj/mURBEPSqeCU/2uHWwiaXNgGV9s8N0=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "test2",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-09-23T10:56:51.968Z",
+            "university": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "history.customusermodel",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$YyzUWe9C5e5n$KDrT0aIzII8TS8HZ9BEm88g7bGKzzNzKT2kJxc6oF+c=",
+            "last_login": "2020-09-23T16:05:51.359Z",
+            "is_superuser": false,
+            "username": "junki",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-09-23T10:57:37.580Z",
+            "university": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

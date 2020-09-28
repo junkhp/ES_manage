@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+<div class="alert alert-secondary" role="alert">
+    <div class="container">
+        <p class="display-4">新しい質問を追加</p>
+    </div>
+</div>
+
+{% endblock header %}
+
+
+{% block content %}
+<div class="container">
+    <form action="" , method="POST">
+        {% csrf_token %}
+        <p>質問</p>
+        <p>{{form.question}}</p>
+        <p>回答</p>
+        <p>{{form.answer}}</p>
+        <p>タグ</p>
+        <p>{{form.tags}}</p>
+        <p>企業名{{form.company}}</p>
+        <p>イベント{{form.state}}</p>
+        <p>公開{{form.open_info}}</p>
+
+        <input type="hidden" name=username value="{{username}}">
+        <input type="submit" value="作成する">
+    </form>
+</div>
+
+{% endblock content %}

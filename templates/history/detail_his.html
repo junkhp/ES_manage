@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">詳細画面</h1>
+        <a href="{% url 'list'%}" class="btn btn-warning btn-lg" tabindex="-1" role="button"
+            aria-disabled="true">一覧に戻る</a>
+        <br>
+        <br>
+        <a href="#" class="btn btn-primary btn" tabindex="-1" role="button" aria-disabled="true">編集</a>
+        <a href="#" class="btn btn-danger btn" tabindex="-1" role="button" aria-disabled="true">削除</a>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        <p>[質問]{{object.question}}</p>
+        <p>[回答]{{object.answer}}</p>
+        <p>[企業名]{{object.company}}</p>
+        <p>[状況]{{object.state}}</p>
+        <p>[文字数]{{object.char_num}}</p>
+
+    </div>
+</div>
+
+{% endblock content %}
