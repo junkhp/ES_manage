@@ -20,7 +20,7 @@
         </textarea></p>
         <p><label for="id_answer">回答:<br></label> <textarea name="answer" cols="40" rows="10" required id="id_answer">
         </textarea></p>
-        <p><label for="id_tags">タグ名:</label> <select name="tags" id="id_tags" multiple>
+        <p><label for="id_tags">タグ名:</label> <select size="5" name="tags" id="id_tags" multiple>
 
                 {% for tag in tags %}
                 <option value="{{tag.pk}}">{{tag.tag_name}}</option>

@@ -55,21 +55,23 @@ def logoutfunc(request):
 
 
 class HistoryCreateView(View):
-    slug_field = "username"
-    slug_url_kwarg = "username"
 
     def get(self, request, *args, **kwargs):
-        username = request.user.username
-        tags = TagModel.objects.filter(username=username)
+        login_username = request.user.username
+        print(login_username)
+        tags = TagModel.objects.filter(username=login_username)
+        print(len(tags))
         context = {
             'form': HistoryCreateForm(),
-            'username': username,
+            'login_username': login_username,
             'tags': tags,
+            # タグの数に応じてpost画面のタグの表示数を変更，タグが10個以上の場合はスクロール
+            'len_tags': min(len(tags), 10),
         }
         return render(request, 'history/create_post.html', context)
 
     def post(self, request, *args, **kwargs):
-        username = request.user.username
+        login_username = request.user.username
         request_copy = request.POST.copy()
         request_copy['question'] = request_copy['question'].rstrip().lstrip()
         request_copy['answer'] = request_copy['answer'].rstrip().lstrip()
@@ -78,7 +80,7 @@ class HistoryCreateView(View):
         if form.is_valid():
             form.save()
             print('ok')
-            return redirect('list', username=username)
+            return redirect('list', username=login_username)
         else:
             print('failed')
             return redirect('create_his')
@@ -104,16 +106,41 @@ class HistoryListView(ListView):
 
     def get(self, request, username):
         # ログイン中のユーザー名を取得
-        # username = request.user.username
+        login_username = request.user.username
         # username = self.kwargs['username']
-        histories = HistoryModel.objects.filter(username=username)
-        print(username)
 
-        context = {
-            'username': username,
-            'histories': histories,
-        }
-        return render(request, 'history/list.html', context)
+        # ゆーざーDBに登録されていないユーザ名がリクエストされることも想定される
+        # この方法がベストかはわからないがとりあえず．
+        # ユーザーが存在していないとき
+        if CustomUserModel.objects.filter(username=username).count() == 0:
+            context = {
+                'username': username,
+                'login_username': login_username,
+            }
+            return render(request, 'history/list_not_exist.html', context)
+
+        # ログインしていない人のポストを見るときには制限をかける
+        # ログインしているとき
+        if login_username == username:
+            histories = HistoryModel.objects.filter(username=username)
+
+            context = {
+                'username': username,
+                'histories': histories,
+                'login_username': login_username
+            }
+            return render(request, 'history/list.html', context)
+
+        # ログインしていないとき
+        else:
+            # memo:カンマで区切るとAND検索
+            histories = HistoryModel.objects.filter(username=username, open_info='public')
+            context = {
+                'username': username,
+                'histories': histories,
+                'login_username': login_username,
+            }
+            return render(request, 'history/list_not_login.html', context)
 
 
 class HistoryDetailView(DetailView):
@@ -132,45 +159,47 @@ class HistroyUpdateView(View):
     '''ポストを修正'''
 
     def get(self, request, pk, *args, **kwargs):
-        username = request.user.username
-        print(username)
-        print(pk)
+        login_username = request.user.username
         post = HistoryModel.objects.get(pk=pk)
         form = UpdateForm(instance=post)
+        tags = TagModel.objects.filter(username=login_username)
         print(post)
         context = {
             'form': form,
-            'username': username,
+            'login_username': login_username,
+            'tags': tags,
+            # タグの数に応じてpost画面のタグの表示数を変更，タグが10個以上の場合はスクロール
+            'len_tags': min(len(tags), 10),
         }
         return render(request, 'history/update_post.html', context)
 
     def post(self, request, pk, *args, **kwargs):
-        username = request.user.username
+        login_username = request.user.username
         post = HistoryModel.objects.get(pk=pk)
         form = UpdateForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('list', username=username)
+            return redirect('list', username=login_username)
         else:
             return redirect('update')
 
 
 class TagCreateView(View):
     def get(self, request, *args, **kwargs):
-        username = request.user.username
+        login_username = request.user.username
         context = {
             'form': TagCreateForm(),
-            'username': username,
+            'username': login_username,
         }
         return render(request, 'history/create_tag.html', context)
 
     def post(self, request, *args, **kwargs):
-        username = request.user.username
+        login_username = request.user.username
         form = TagCreateForm(request.POST)
         if form.is_valid():
             form.save()
             print('ok')
-            return redirect('list', username=username)
+            return redirect('list', username=login_username)
         else:
             print('failed')
             return redirect('create_his')
