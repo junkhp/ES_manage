@@ -4,7 +4,11 @@
 {% block header %}
 <div class="alert alert-secondary" role="alert">
     <div class="container">
-        <p class="display-4">新しい質問を追加</p>
+        <p class="display-4">新しいタグを追加</p>
+        <p>既存のタグ(同じ名前のタグは作成できません)</p>
+        {% for tag in tags %}
+        <a href="#" class="btn btn-dark btn" tabindex="-1" role="button" aria-disabled="true">{{tag}}</a>
+        {% endfor %}
     </div>
 </div>
 
@@ -17,7 +21,7 @@
         {% csrf_token %}
         <p>タグ名</p>
         <p>{{form.tag_name}}</p>
-        <input type="hidden" name=username value="{{username}}">
+        <input type="hidden" name=username value="{{login_username}}">
         <input type="submit" value="作成する">
     </form>
 </div>

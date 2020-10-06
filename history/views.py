@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from .models import CustomUserModel, TagModel, HistoryModel
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import View
 from .forms import HistoryCreateForm, TagCreateForm, UpdateForm
 from django.contrib.auth import authenticate, login, logout
@@ -26,9 +26,6 @@ class SignupView(View):
             CustomUserModel.objects.get(username=username)
             return render(request, 'history/signup.html', {'error': 'このユーザー名は既に登録されています．'})
         except:
-            user = CustomUserModel.objects.create_user(username, '', password)
-            # 新しいユーザーが作成されたタイミングで並び順モデルに新しいデータを追加
-            # HowtoOrder.objects.create(user_name=username)
             return redirect('login')
 
 
@@ -48,6 +45,8 @@ class LoginView(View):
         else:
             return redirect('login')
 
+# ログアウト関数
+
 
 def logoutfunc(request):
     logout(request)
@@ -55,23 +54,30 @@ def logoutfunc(request):
 
 
 class HistoryCreateView(View):
+    '''質問と回答を作成する'''
 
     def get(self, request, *args, **kwargs):
         login_username = request.user.username
-        print(login_username)
         tags = TagModel.objects.filter(username=login_username)
-        print(len(tags))
+        num_tags = len(tags)
+
+        # ポスト作成画面(templates/history/create_post.html)にて一度に表示するタグ数の上限
+        # タグの数が上限より多い時はスクロールになる
+        max_num_tags = 10
         context = {
             'form': HistoryCreateForm(),
             'login_username': login_username,
             'tags': tags,
-            # タグの数に応じてpost画面のタグの表示数を変更，タグが10個以上の場合はスクロール
-            'len_tags': min(len(tags), 10),
+            # タグの数に応じてpost画面のタグの表示数を変更
+            'len_tags': min(num_tags, max_num_tags),
         }
         return render(request, 'history/create_post.html', context)
 
     def post(self, request, *args, **kwargs):
         login_username = request.user.username
+
+        # 回答の文字数を取得
+        # 回答の前後にスペースがある場合，それらを削除してから文字数を取得
         request_copy = request.POST.copy()
         request_copy['question'] = request_copy['question'].rstrip().lstrip()
         request_copy['answer'] = request_copy['answer'].rstrip().lstrip()
@@ -107,11 +113,10 @@ class HistoryListView(ListView):
     def get(self, request, username):
         # ログイン中のユーザー名を取得
         login_username = request.user.username
-        # username = self.kwargs['username']
 
         # ゆーざーDBに登録されていないユーザ名がリクエストされることも想定される
         # この方法がベストかはわからないがとりあえず．
-        # ユーザーが存在していないとき
+        # ユーザーが存在していないときの処理
         if CustomUserModel.objects.filter(username=username).count() == 0:
             context = {
                 'username': username,
@@ -149,11 +154,17 @@ class HistoryDetailView(DetailView):
     model = HistoryModel
 
 
-# class TodoDeleteView(DeleteView):
-#     '''タスクを削除'''
-#     template_name = 'history/delete_post.html'
-#     model = HistoryModel
-#     success_url = reverse_lazy('list')
+class HistoryDeleteView(DeleteView):
+    '''タスクを削除'''
+
+    template_name = 'history/delete_post.html'
+    model = HistoryModel
+    # success_url = reverse_lazy('list', username=login_username)
+
+    def get_success_url(self):
+        print(self.request.user.username)
+        return reverse('list', kwargs={'username': self.request.user.username})
+
 
 class HistroyUpdateView(View):
     '''ポストを修正'''
@@ -187,9 +198,11 @@ class HistroyUpdateView(View):
 class TagCreateView(View):
     def get(self, request, *args, **kwargs):
         login_username = request.user.username
+        tags = TagModel.objects.filter(username=login_username)
         context = {
             'form': TagCreateForm(),
-            'username': login_username,
+            'login_username': login_username,
+            'tags': tags,
         }
         return render(request, 'history/create_tag.html', context)
 
@@ -202,4 +215,4 @@ class TagCreateView(View):
             return redirect('list', username=login_username)
         else:
             print('failed')
-            return redirect('create_his')
+            return redirect('create_tag')

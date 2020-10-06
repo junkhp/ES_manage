@@ -17,6 +17,21 @@
 <div class="container">
     {% for item in histories %}
     <div class="alert alert-success" role="alert">
+
+        {% if item.open_info == 'private' %}
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+        </svg>
+        {% else %}
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock-fill" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+            <path fill-rule="evenodd" d="M8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+        </svg>
+        {% endif %}
+
         <p>[質問]{{item.question}}</p>
 
         {% for tag in item.tags.all %}
@@ -28,7 +43,8 @@
             aria-disabled="true">詳細</a>
         <a href="{% url 'update' item.pk %}" class="btn btn-primary btn" tabindex="-1" role="button"
             aria-disabled="true">編集</a>
-        <a href="#" class="btn btn-danger btn" tabindex="-1" role="button" aria-disabled="true">削除</a>
+        <a href="{% url 'delete' item.pk %}" class="btn btn-danger btn" tabindex="-1" role="button"
+            aria-disabled="true">削除</a>
     </div>
 
     {% endfor %}
