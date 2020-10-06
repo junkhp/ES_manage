@@ -5,3 +5,4 @@ __pycache__
 *.DS_Store
 config/local_settings.py
 .vscode
+templates/history/create_history.html
