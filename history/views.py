@@ -23,10 +23,10 @@ class SignupView(View):
         password = request.POST['password']
 
         # ユーザーを追加
-        try:
-            CustomUserModel.objects.get(username=username)
+        if CustomUserModel.objects.filter(username=username).exists():
             return render(request, 'history/signup.html', {'error': 'このユーザー名は既に登録されています．'})
-        except:
+        else:
+            CustomUserModel.objects.create_user(username, '', password)
             return redirect('login')
 
 
@@ -114,6 +114,14 @@ class HistoryListView(ListView):
     def get(self, request, username):
         # ログイン中のユーザー名を取得
         login_username = request.user.username
+        if login_username == '':
+            login_username = 'ゲスト'
+
+        # print('---------------')
+        # print(login_username)
+        # print(type(login_username))
+        # print(len(login_username))
+        # print('---------------')
 
         # ゆーざーDBに登録されていないユーザ名がリクエストされることも想定される
         # この方法がベストかはわからないがとりあえず．
@@ -202,10 +210,12 @@ class TagCreateView(View):
     def get(self, request, *args, **kwargs):
         login_username = request.user.username
         tags = TagModel.objects.filter(username=login_username)
+        num_tags = len(tags)
         context = {
             'form': TagCreateForm(),
             'login_username': login_username,
             'tags': tags,
+            'num_tags': num_tags,
         }
         return render(request, 'history/create_tag.html', context)
 
@@ -227,6 +237,8 @@ class SearchUserView(View):
     def get(self, request, *args, **kwargs):
         search_user = self.request.GET.get('search_username')
         login_username = request.user.username
+        if login_username == '':
+            login_username = 'ゲスト'
         context = {
             'login_username': login_username,
             'search_user': search_user,

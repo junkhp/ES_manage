@@ -5,10 +5,15 @@
 <div class="alert alert-secondary" role="alert">
     <div class="container">
         <p class="display-4">新しいタグを追加</p>
+
+        {% if num_tags == 0 %}
+        <p>まだタグはありません</p>
+        {% else %}
         <p>既存のタグ(同じ名前のタグは作成できません)</p>
         {% for tag in tags %}
         <a href="#" class="btn btn-dark btn" tabindex="-1" role="button" aria-disabled="true">{{tag}}</a>
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 

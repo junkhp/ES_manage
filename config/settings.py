@@ -127,8 +127,13 @@ PUBLIC_PATHS = [
     '/admin/',
     '/signup/',
     # ログインしてなくてもlist表示を見れるように
-    # '<str:username>/list/',
+    '/list/',
+    '/search_user',
 ]
+
+# ログインしないとアクセスできないURLにアクセスした時の遷移先
+LOGIN_URL = 'login'
+
 
 AUTH_USER_MODEL = 'history.CustomUserModel'
 

@@ -19,6 +19,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        {% if login_username != 'ゲスト'%}
         <a class="navbar-brand" href="{%url 'list' login_username%}">ES質問まとめアプリ</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,16 +37,37 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'create_tag' %}">タグを追加<span class="sr-only">(current)</span></a>
                 </li>
+
                 <li>
                     <a class="nav-link" href="{% url 'logout' %}">ログアウト<span class="sr-only">(current)</span></a>
                 </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0" method="GET" , action="{% url 'search_user' %}">
-                <input class="form-control mr-sm-2" type="search" placeholder="ユーザー検索" aria-label="Search"
-                    name="search_username">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">検索</button>
-            </form>
-        </div>
+                {% else %}
+                <a class="navbar-brand">ES質問まとめアプリ</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="navbar-brand">{{login_username}}</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'login' %}">ログイン<span class="sr-only">(current)</span></a>
+                        </li>
+                        {% endif %}
+
+
+
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" method="GET" , action="{% url 'search_user' %}">
+                        <input class="form-control mr-sm-2" type="search" placeholder="ユーザー検索" aria-label="Search"
+                            name="search_username">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">検索</button>
+                    </form>
+                </div>
     </nav>
 
     {% block header %}
