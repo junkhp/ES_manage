@@ -121,10 +121,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# ログインしていなくてもアクセスできるURL
 PUBLIC_PATHS = [
     '/login/',
     '/admin/',
     '/signup/',
+    # ログインしてなくてもlist表示を見れるように
+    # '<str:username>/list/',
 ]
 
 AUTH_USER_MODEL = 'history.CustomUserModel'

@@ -7,6 +7,7 @@ from .forms import HistoryCreateForm, TagCreateForm, UpdateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 # Create your views here.
 
@@ -54,7 +55,7 @@ def logoutfunc(request):
 
 
 class HistoryCreateView(View):
-    '''質問と回答を作成する'''
+    '''質問と回答(post)を作成する'''
 
     def get(self, request, *args, **kwargs):
         login_username = request.user.username
@@ -196,6 +197,8 @@ class HistroyUpdateView(View):
 
 
 class TagCreateView(View):
+    '''タグを作成するview'''
+
     def get(self, request, *args, **kwargs):
         login_username = request.user.username
         tags = TagModel.objects.filter(username=login_username)
@@ -216,3 +219,20 @@ class TagCreateView(View):
         else:
             print('failed')
             return redirect('create_tag')
+
+
+class SearchUserView(View):
+    '''ユーザー検索'''
+
+    def get(self, request, *args, **kwargs):
+        search_user = self.request.GET.get('search_username')
+        login_username = request.user.username
+        context = {
+            'login_username': login_username,
+            'search_user': search_user,
+        }
+        if CustomUserModel.objects.filter(username=search_user).exists():
+            context['error'] = False
+        else:
+            context['error'] = True
+        return render(request, 'history/search_user.html', context)

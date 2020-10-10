@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">ユーザー名検索結果</h1>
+
+        {% if error%}
+        <h2>「{{search_user}}」は存在しません</h2>
+        {% else %}
+        <a href="{% url 'list' search_user%}" class="btn btn-info btn-lg" tabindex="-1" role="button"
+            aria-disabled="true">{{search_user}}</a>のページに行く
+        {% endif %}
+    </div>
+</div>
+{% endblock header %}

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('<str:username>/list/', views.HistoryListView.as_view(), name='list'),
     path('detailhis/<int:pk>', views.HistoryDetailView.as_view(), name='detail_his'),
@@ -11,4 +12,5 @@ urlpatterns = [
     path('logout/', views.logoutfunc, name='logout'),
     path('update/<int:pk>', views.HistroyUpdateView.as_view(), name='update'),
     path('delete/<int:pk>', views.HistoryDeleteView.as_view(), name='delete'),
+    path('search_user', views.SearchUserView.as_view(), name='search_user')
 ]
