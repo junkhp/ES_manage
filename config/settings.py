@@ -18,13 +18,8 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_NAME = os.path.basename(BASE_DIR)
 
-SECRET_KEY = '+ngz8@96ji)6a+mf6#9cz8n$y5x&9qy4)!-z6c)c5_5(!9ioib'
 
 DEBUG = False
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
@@ -39,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'CustomUser',
     'history',
 ]
 
