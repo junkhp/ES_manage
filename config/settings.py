@@ -144,6 +144,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEBUG = False
 
+# 開発環境にはlocal_settingsが存在しそちらを読み込む
 try:
     from config.local_settings import *
 except ImportError:
