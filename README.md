@@ -6,6 +6,10 @@ Python+Djangoで作成しました
 Herokuにデプロイしています.
 
 [ES質問まとめアプリ](https://esmanageapp.herokuapp.com/login/)
+
+私が公開にしているESの質問の回答は以下のURLで見ることができます．
+
+[私(junki)の回答](https://esmanageapp.herokuapp.com/list/junki/)
 # Features
 ## 機能
 ### 実装済み
