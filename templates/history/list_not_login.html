@@ -14,8 +14,8 @@
 <div class="container">
     {% for item in histories %}
     <div class="alert alert-success" role="alert">
-        <p>[質問]{{item.question}}</p>
-        <p>[回答]{{item.answer}}</p>
+        <p>[質問]<br>{{item.question | linebreaksbr}}</p>
+        <p>[回答]<br>{{item.answer | linebreaksbr}}</p>
 
         {% for tag in item.tags.all %}
         <a href="#" class="btn btn-dark btn" tabindex="-1" role="button" aria-disabled="true">{{tag}}</a>
