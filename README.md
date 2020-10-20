@@ -9,12 +9,13 @@ ESの質問に対する自分の回答を効率よく管理することができ
 また，自分の回答を管理するだけでなく，公開に設定したポストを他人に見せることができ，ポートフォリオとして使用することもできます．\
 コードの管理と自身のアピールの両方が可能であるGitHubのES版をコンセプトとして作成しています．
 
-Herokuにデプロイしています.
+Wikiにアプリの使用方法を書いています．\
+[ES_manage_Wiki](https://github.com/junkhp/ES_manage/wiki)
 
+Herokuにデプロイしています.\
 [ES質問まとめアプリ](https://esmanageapp.herokuapp.com/login/)
 
-私が公開にしているESの質問の回答は以下のURLで見ることができます．
-
+私が公開にしているESの質問の回答は以下のURLで見ることができます．\
 [私(junki)の回答](https://esmanageapp.herokuapp.com/list/junki/)
 # Features
 ## 機能
