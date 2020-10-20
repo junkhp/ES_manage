@@ -7,3 +7,4 @@ config/local_settings.py
 .vscode
 templates/history/create_history.html
 .env
+ES_manage.wiki

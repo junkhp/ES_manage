@@ -56,7 +56,7 @@ OS
 
 # Usage
 このレポジトリをクローン
-```bash
+```git
 git clone https://github.com/junkhp/ES_manage.git
 ```
 クローンしたフォルダに移動
